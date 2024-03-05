@@ -91,7 +91,7 @@ pub fn html_parts_separated(
           }
           mod.hydrate();
         }"# */
-        r#"() => {       
+        r#"() => {
             for (let e of document.querySelectorAll("leptos-island")) {
                 let l = e.dataset.component;
                 mod["_island_" + l](e);
@@ -118,23 +118,6 @@ pub fn html_parts_separated(
                     <meta charset="utf-8"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     {head}
-                    <link rel="modulepreload" href="{pkg_path}/{output_name}{js_hash}.js"{nonce}>
-                    <link rel="preload" href="{pkg_path}/{wasm_output_name}{wasm_hash}.wasm" as="fetch" type="application/wasm" crossorigin=""{nonce}>
-                    <script type="module"{nonce}>
-                        function idle(c) {{
-                            if ("requestIdleCallback" in window) {{
-                                window.requestIdleCallback(c);
-                            }} else {{
-                                c();
-                            }}
-                        }}
-                        idle(() => {{
-                            import('{pkg_path}/{output_name}{js_hash}.js')
-                                .then(mod => {{
-                                    mod.default('{pkg_path}/{wasm_output_name}{wasm_hash}.wasm').then({import_callback});
-                                }})
-                        }});
-                    </script>
                     {leptos_autoreload}
                 </head>"#
     );
